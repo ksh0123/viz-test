@@ -1,25 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+// src/App.js
+import React, { useState } from "react";
+import ToggleMenu from "./components/ToggleMenu";
+import TimelineComponent from "./components/Timeline";
+import Mindmap from "./components/Mindmap";
+import CategoryChart from "./components/CategoryChart";
+import "./App.css";
 
-function App() {
+const App = () => {
+  const [view, setView] = useState("timeline");
+
+  const renderView = () => {
+    switch (view) {
+      case "timeline":
+        return <TimelineComponent key="timeline" />;
+      case "mindmap":
+        return <Mindmap key="mindmap" />;
+      case "category":
+        return <CategoryChart key="category" />;
+      default:
+        return null;
+    }
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container mx-auto p-4">
+      <ToggleMenu onToggle={setView} />
+      <div className="visualization-container">{renderView()}</div>
     </div>
   );
-}
+};
 
 export default App;
